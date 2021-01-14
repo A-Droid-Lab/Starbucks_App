@@ -13,8 +13,8 @@ class StarbucksRepository @Inject constructor(private val apiService: ApiService
 
     fun getCoffeeMenu() : Single<List<MenuItem>> {
         return apiService.getAllMenus()
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
+            .subscribeOn(Schedulers.io()) //Observable이 발행되는 스레드를 지정한다.
+            .observeOn(AndroidSchedulers.mainThread()) //처리된 결과를 전달하는 스레드 지정한다.
             .toObservable()
             .flatMapIterable {
                 it.filter { t -> t.id in 249..295 }
