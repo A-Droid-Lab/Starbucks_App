@@ -13,6 +13,7 @@ import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
+import java.util.concurrent.TimeUnit
 import javax.inject.Singleton
 
 @Module(includes = [ViewModelModule::class])
@@ -31,6 +32,7 @@ class AppModule {
     fun provideOkHttpClient(httpLoggingInterceptor: HttpLoggingInterceptor): OkHttpClient {
         val okHttpClient = OkHttpClient.Builder()
         okHttpClient.apply {
+            connectTimeout(30,TimeUnit.SECONDS)
             addInterceptor(httpLoggingInterceptor)
         }
         return okHttpClient.build()
@@ -41,8 +43,8 @@ class AppModule {
     fun provideApiService(okHttpClient: OkHttpClient): ApiService {
         val retrofit = Retrofit.Builder()
             .baseUrl(Constants.BASE_URL)
-            .addConverterFactory(GsonConverterFactory.create())
-            .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+            .addConverterFactory(GsonConverterFactory.create()) //Gson으로 데이터 컨버팅 하기 위해
+            .addCallAdapterFactory(RxJava2CallAdapterFactory.create()) //RxJava를 사용하여 데이터를 비동기 통신하기 위해
             .client(okHttpClient)
             .build()
 

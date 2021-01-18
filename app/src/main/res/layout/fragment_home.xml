@@ -8,48 +8,35 @@
     tools:context=".view.fragment.HomeFragment">
 
     <TextView
-        android:id="@+id/tv_coffee"
+        android:id="@+id/tv_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Coffee"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
+        android:text="Menu"
         android:layout_margin="20sp"
-        android:textStyle="bold"
-        android:textSize="25sp"
+        android:fontFamily="@font/santana_bold"
+        android:textSize="30sp"
         />
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rcv_main_coffee"
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/tb_menu"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@+id/tv_coffee"
-        android:layout_marginTop="10dp"
-        android:orientation="horizontal"
-        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        app:tabMode="scrollable"
+        app:tabGravity="center"
+        app:layout_constraintTop_toBottomOf="@+id/tv_title"
+        android:layout_marginTop="20dp"
         />
 
-    <TextView
-        android:id="@+id/tv_frapuccino"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Frapuccino"
-        app:layout_constraintTop_toBottomOf="@+id/rcv_main_coffee"
-        app:layout_constraintStart_toStartOf="parent"
-        android:layout_margin="20sp"
-        android:textStyle="bold"
-        android:textSize="25sp"
-        />
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rcv_main_frapuccino"
+    <androidx.viewpager2.widget.ViewPager2
+        android:id="@+id/vp_menu_fragment"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@+id/tv_frapuccino"
-        android:layout_marginTop="10dp"
-        android:orientation="horizontal"
-        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        app:layout_constraintTop_toBottomOf="@id/tb_menu"
         />
+
+
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

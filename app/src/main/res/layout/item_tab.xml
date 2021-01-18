@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    >
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+
+        android:gravity="center">
+
+        <TextView
+            android:id="@+id/tv_tab_item"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="4dp"
+            android:text="MENU"
+            android:fontFamily="@font/santana"
+            android:textColor="@color/selector_click_tab"
+            android:textSize="12sp"/>
+    </LinearLayout>
+</layout>
