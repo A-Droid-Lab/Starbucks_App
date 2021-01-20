@@ -31,15 +31,10 @@ class DetailFragment : BaseFragment<MenuViewModel, FragmentDetailBinding>() {
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        postponeEnterTransition()
-        sharedElementEnterTransition =
-            TransitionInflater.from(requireContext()).inflateTransition(android.R.transition.move).apply {
-                duration = 3000
-            }
         super.onCreate(savedInstanceState)
-        arguments?.let {
-            data = it.getParcelable<MenuItem>(ARG_PARAM1)!!
-        }
+        arguments?.let {data = it.getParcelable(ARG_PARAM1)!! }
+        postponeEnterTransition()
+        this.sharedElementEnterTransition = TransitionInflater.from(context).inflateTransition(android.R.transition.move).setDuration(100)
     }
 
     override fun getViewModel(): Class<MenuViewModel> = MenuViewModel::class.java

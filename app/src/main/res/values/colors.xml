@@ -43,4 +43,7 @@
     <color name="red_1000">#950000</color>
     <color name="grayscale_400">#eeeeee</color>
     <color name="transparent">#00000000</color>
+    <color name="starbucks_green">#00704A</color>
+    <color name="starbucks_black">#27251F</color>
+
 </resources>

@@ -1,18 +1,14 @@
 package com.project.starbucks_app.view.fragment.home
 
-import android.util.Log
-import android.view.View
-import android.widget.ImageView
-import androidx.core.view.ViewCompat
-import androidx.transition.TransitionInflater
 import com.project.starbucks_app.R
 import com.project.starbucks_app.databinding.FragmentHomeCoffeeBinding
 import com.project.starbucks_app.util.ViewType.Companion.BLENDED
 import com.project.starbucks_app.util.ViewType.Companion.COFFEE
 import com.project.starbucks_app.util.ViewType.Companion.FRAPUCCINO
+import com.project.starbucks_app.util.transactSlide
+import com.project.starbucks_app.util.transactSwipe
 import com.project.starbucks_app.view.adapter.CoffeeMenuAdapter
 import com.project.starbucks_app.view.base.BaseFragment
-import com.project.starbucks_app.view.fragment.detail.DetailFragment
 import com.project.starbucks_app.view.vm.CoffeeViewModel
 
 
@@ -32,7 +28,7 @@ class HomeCoffeeFragment : BaseFragment<CoffeeViewModel, FragmentHomeCoffeeBindi
     override fun getLayoutRes(): Int = R.layout.fragment_home_coffee
 
     override fun beforeViewCreated(){
-        exitTransition = TransitionInflater.from(context).inflateTransition(android.R.transition.fade)
+        dataBinding.fragment = this
         viewModel.getCoffeeMenu()
         viewModel.getFrapuccinoMenu()
         viewModel.getBlendedMenu()
@@ -80,38 +76,21 @@ class HomeCoffeeFragment : BaseFragment<CoffeeViewModel, FragmentHomeCoffeeBindi
     }
 
     private fun initOnClick(){
-        coffeeAdapter.setOnItemClickListener {item, view, ivName ->
-            fragmentManager.let {
-                it!!.beginTransaction()
-                    .addSharedElement(view, ivName)
-                    .replace(R.id.container, DetailFragment.newInstance(item))
-                    .addToBackStack("icon_android")
-                    .commit()
-            }
-            Log.d("고유값 !? :: ", ivName)
+        coffeeAdapter.setOnItemClickListener {item, view->
+            fragmentManager?.transactSwipe(item)
         }
 
-        frapuccinoAdapter.setOnItemClickListener {item, view, ivName ->
-            fragmentManager.let {
-                it!!.beginTransaction()
-                    .addSharedElement(view, ivName)
-                    .replace(R.id.container, DetailFragment.newInstance(item))
-                    .addToBackStack("icon_android")
-                    .commit()
-            }
-            Log.d("고유값 !? :: ", ivName)
+        frapuccinoAdapter.setOnItemClickListener {item, view->
+            fragmentManager?.transactSwipe(item)
         }
 
-        blendedAdapter.setOnItemClickListener {item, view, ivName ->
-            fragmentManager.let {
-                it!!.beginTransaction()
-                    .addSharedElement(view, ivName)
-                    .replace(R.id.container, DetailFragment.newInstance(item))
-                    .addToBackStack("icon_android")
-                    .commit()
-            }
-            Log.d("고유값 !? :: ", ivName)
+        blendedAdapter.setOnItemClickListener {item, view->
+            fragmentManager?.transactSwipe(item)
         }
+    }
+
+    fun onViewAll(){
+        fragmentManager?.transactSlide<HomeViewAllFragment>()
     }
 
 }

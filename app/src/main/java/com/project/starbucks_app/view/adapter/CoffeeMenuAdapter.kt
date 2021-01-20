@@ -16,10 +16,10 @@ class CoffeeMenuAdapter(private val type:String) : RecyclerView.Adapter<Recycler
 
     private var dataList: ArrayList<MenuItem> = ArrayList()
 
-    private var listener: ((item: MenuItem, view:ImageView, ivName:String) -> Unit)? = null
+    private var listener: ((item: MenuItem, view:ImageView) -> Unit)? = null
 
 
-    fun setOnItemClickListener(listener: (item: MenuItem, view:ImageView, ivName:String) -> Unit) {
+    fun setOnItemClickListener(listener: (item: MenuItem, view:ImageView) -> Unit) {
         this.listener = listener
     }
 
@@ -53,7 +53,7 @@ class CoffeeMenuAdapter(private val type:String) : RecyclerView.Adapter<Recycler
         fun bind(data: com.project.starbucks_app.data.local.entity.MenuItem, position: Int){
             binding.item = data
             itemView.setOnClickListener {
-                listener?.invoke(data, binding.ivMenuImage, binding.ivMenuImage.transitionName+position)
+                listener?.invoke(data, binding.ivMenuImage)
             }
         }
     }
@@ -62,7 +62,7 @@ class CoffeeMenuAdapter(private val type:String) : RecyclerView.Adapter<Recycler
         fun bind(data: com.project.starbucks_app.data.local.entity.MenuItem, position: Int){
             binding.item = data
             itemView.setOnClickListener {
-                listener?.invoke(data, binding.ivMenuImage, binding.ivMenuImage.transitionName+position)
+                listener?.invoke(data, binding.ivMenuImage)
             }
         }
     }
@@ -71,7 +71,7 @@ class CoffeeMenuAdapter(private val type:String) : RecyclerView.Adapter<Recycler
         fun bind(data: com.project.starbucks_app.data.local.entity.MenuItem, position: Int){
             binding.item = data
             itemView.setOnClickListener {
-                listener?.invoke(data, binding.ivMenuImage,binding.ivMenuImage.transitionName+position)
+                listener?.invoke(data, binding.ivMenuImage)
             }
         }
     }
