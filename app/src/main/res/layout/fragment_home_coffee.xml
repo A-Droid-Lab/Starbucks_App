@@ -20,6 +20,17 @@
         android:textSize="25sp"
         />
 
+    <TextView
+        android:id="@+id/tv_seeAllCoffee"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="See All Menu"
+        app:layout_constraintTop_toTopOf="@+id/tv_coffee"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="15dp"
+        android:layout_marginEnd="15sp"
+        />
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rcv_main_coffee"
         android:layout_width="match_parent"
@@ -75,8 +86,6 @@
         android:orientation="horizontal"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         />
-
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

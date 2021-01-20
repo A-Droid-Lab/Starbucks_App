@@ -1,6 +1,7 @@
 package com.project.starbucks_app.di.builder
 
 import com.project.starbucks_app.view.fragment.HomeFragment
+import com.project.starbucks_app.view.fragment.detail.DetailFragment
 import com.project.starbucks_app.view.fragment.home.HomeBakeryFragment
 import com.project.starbucks_app.view.fragment.home.HomeBeverageFragment
 import com.project.starbucks_app.view.fragment.home.HomeCoffeeFragment
@@ -25,4 +26,7 @@ abstract class FragmentBuilder {
 
     @ContributesAndroidInjector
     abstract fun contributeHomeGiftFragment() : HomeGiftFragment
+
+    @ContributesAndroidInjector
+    abstract fun contributeDetailFragment() : DetailFragment
 }

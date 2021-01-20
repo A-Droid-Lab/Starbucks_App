@@ -20,6 +20,7 @@
             android:layout_width="100dp"
             android:layout_height="100dp"
             app:loadImage="@{item.image}"
+            android:transitionName="menu_image"
             />
 
         <TextView

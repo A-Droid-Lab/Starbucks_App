@@ -9,6 +9,12 @@ import com.project.starbucks_app.databinding.ItemMenuBinding
 class HomeMenuAdapter() : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     private var dataList = arrayListOf<MenuItem>()
 
+    private var listener: ((item: MenuItem) -> Unit)? = null
+
+    fun setOnItemClickListener(listener: (item: MenuItem) -> Unit) {
+        this.listener = listener
+    }
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val binding = ItemMenuBinding.inflate(LayoutInflater.from(parent.context),parent,false)
         return MainViewHolder(binding)
@@ -28,9 +34,12 @@ class HomeMenuAdapter() : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
         notifyDataSetChanged()
     }
 
-    class MainViewHolder(private val binding : ItemMenuBinding) : RecyclerView.ViewHolder(binding.root){
+    inner class MainViewHolder(private val binding : ItemMenuBinding) : RecyclerView.ViewHolder(binding.root){
         fun bind(data: com.project.starbucks_app.data.local.entity.MenuItem){
             binding.item = data
+            itemView.setOnClickListener {
+                listener?.invoke(data)
+            }
         }
     }
 

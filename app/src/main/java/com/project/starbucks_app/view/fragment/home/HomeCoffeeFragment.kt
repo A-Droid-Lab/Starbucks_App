@@ -1,33 +1,49 @@
 package com.project.starbucks_app.view.fragment.home
 
 import android.util.Log
+import android.view.View
+import android.widget.ImageView
+import androidx.core.view.ViewCompat
+import androidx.transition.TransitionInflater
 import com.project.starbucks_app.R
 import com.project.starbucks_app.databinding.FragmentHomeCoffeeBinding
-import com.project.starbucks_app.view.adapter.HomeMenuAdapter
+import com.project.starbucks_app.util.ViewType.Companion.BLENDED
+import com.project.starbucks_app.util.ViewType.Companion.COFFEE
+import com.project.starbucks_app.util.ViewType.Companion.FRAPUCCINO
+import com.project.starbucks_app.view.adapter.CoffeeMenuAdapter
 import com.project.starbucks_app.view.base.BaseFragment
-import com.project.starbucks_app.view.vm.MenuViewModel
+import com.project.starbucks_app.view.fragment.detail.DetailFragment
+import com.project.starbucks_app.view.vm.CoffeeViewModel
 
 
-class HomeCoffeeFragment : BaseFragment<MenuViewModel, FragmentHomeCoffeeBinding>() {
+class HomeCoffeeFragment : BaseFragment<CoffeeViewModel, FragmentHomeCoffeeBinding>() {
 
     companion object {
         @JvmStatic
         fun newInstance() = HomeCoffeeFragment()
     }
 
-    private val menuAdapter = HomeMenuAdapter()
+    private val coffeeAdapter = CoffeeMenuAdapter(COFFEE)
+    private val frapuccinoAdapter = CoffeeMenuAdapter(FRAPUCCINO)
+    private val blendedAdapter = CoffeeMenuAdapter(BLENDED)
 
-    override fun getViewModel(): Class<MenuViewModel> = MenuViewModel::class.java
+    override fun getViewModel(): Class<CoffeeViewModel> = CoffeeViewModel::class.java
 
     override fun getLayoutRes(): Int = R.layout.fragment_home_coffee
 
-    override fun beforeViewCreated() {
+    override fun beforeViewCreated(){
+        exitTransition = TransitionInflater.from(context).inflateTransition(android.R.transition.fade)
         viewModel.getCoffeeMenu()
         viewModel.getFrapuccinoMenu()
         viewModel.getBlendedMenu()
     }
 
     override fun afterViewCreated() {
+        initObserve()
+        initOnClick()
+    }
+
+    private fun initObserve(){
         initCoffeeMenu()
         initFrapuccino()
         initBlended()
@@ -35,40 +51,66 @@ class HomeCoffeeFragment : BaseFragment<MenuViewModel, FragmentHomeCoffeeBinding
 
     private fun initCoffeeMenu(){
         dataBinding.rcvMainCoffee.apply {
-            adapter = menuAdapter
+            adapter = coffeeAdapter
             setHasFixedSize(true)
         }
         viewModel.coffeeLiveData.observe(viewLifecycleOwner){
-            it.forEach {t ->
-                Log.d("ㅋㅓ피 ", t.name)
-            }
-            menuAdapter.setItem(it)
+            coffeeAdapter.setItem(it)
         }
     }
 
     private fun initFrapuccino(){
         dataBinding.rcvMainFrapuccino.apply {
-            adapter = menuAdapter
+            adapter = frapuccinoAdapter
             setHasFixedSize(true)
         }
         viewModel.frapuccinoLiveData.observe(viewLifecycleOwner){
-            it.forEach {t ->
-                Log.d("프라푸치노 ", t.name)
-            }
-            menuAdapter.setItem(it)
+            frapuccinoAdapter.setItem(it)
         }
     }
 
     private fun initBlended(){
         dataBinding.rcvMainBlended.apply {
-            adapter = menuAdapter
+            adapter = blendedAdapter
             setHasFixedSize(true)
         }
         viewModel.blendedLiveData.observe(viewLifecycleOwner){
-            it.forEach {t ->
-                Log.d("블렌디드 ", t.name)
+            blendedAdapter.setItem(it)
+        }
+    }
+
+    private fun initOnClick(){
+        coffeeAdapter.setOnItemClickListener {item, view, ivName ->
+            fragmentManager.let {
+                it!!.beginTransaction()
+                    .addSharedElement(view, ivName)
+                    .replace(R.id.container, DetailFragment.newInstance(item))
+                    .addToBackStack("icon_android")
+                    .commit()
             }
-            menuAdapter.setItem(it)
+            Log.d("고유값 !? :: ", ivName)
+        }
+
+        frapuccinoAdapter.setOnItemClickListener {item, view, ivName ->
+            fragmentManager.let {
+                it!!.beginTransaction()
+                    .addSharedElement(view, ivName)
+                    .replace(R.id.container, DetailFragment.newInstance(item))
+                    .addToBackStack("icon_android")
+                    .commit()
+            }
+            Log.d("고유값 !? :: ", ivName)
+        }
+
+        blendedAdapter.setOnItemClickListener {item, view, ivName ->
+            fragmentManager.let {
+                it!!.beginTransaction()
+                    .addSharedElement(view, ivName)
+                    .replace(R.id.container, DetailFragment.newInstance(item))
+                    .addToBackStack("icon_android")
+                    .commit()
+            }
+            Log.d("고유값 !? :: ", ivName)
         }
     }
 

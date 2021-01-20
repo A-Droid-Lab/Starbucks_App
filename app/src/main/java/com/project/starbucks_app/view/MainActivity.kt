@@ -22,4 +22,10 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
             replace(R.id.container, fragment).addToBackStack(fragment.tag)
         }
     }
+
+    fun replaceElement(fragment: Fragment){
+        supportFragmentManager.transact {
+            replace(R.id.container, fragment).addToBackStack(fragment.tag)
+        }
+    }
 }

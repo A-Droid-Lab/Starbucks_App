@@ -27,6 +27,7 @@ class HomeFragment : BaseFragment<MenuViewModel, FragmentHomeBinding>() {
     }
 
     override fun afterViewCreated() {
+        // https://m.blog.naver.com/designcircus/221432095160
     }
 
     private fun initTab(){
@@ -46,7 +47,7 @@ class HomeFragment : BaseFragment<MenuViewModel, FragmentHomeBinding>() {
         val tv_tab_item = maptabView.findViewById<TextView>(R.id.tv_tab_item)
         maptabView.apply {
             tv_tab_item.apply {
-                textSize = 14.0f
+                textSize = 20.0f
                 setBackgroundColor(resources.getColor(R.color.grayscale_100_white))
                 setTextColor(resources.getColor(R.color.grayscale_700))
             }
