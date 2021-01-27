@@ -34,9 +34,7 @@ class HomeViewAllFragment : BaseFragment<CoffeeViewModel, FragmentHomeViewAllBin
             repeatCount = LottieDrawable.INFINITE
             playAnimation()
         }
-        viewModel.getCoffeeMenu()
-        viewModel.getFrapuccinoMenu()
-        viewModel.getBlendedMenu()
+        viewModel.getAllCoffeeMenu()
         dataBinding.rcvViewAll.apply {
             layoutManager = GridLayoutManager(context,3).apply {
                 GridLayoutManager.HORIZONTAL
@@ -46,21 +44,12 @@ class HomeViewAllFragment : BaseFragment<CoffeeViewModel, FragmentHomeViewAllBin
     }
 
     override fun afterViewCreated() {
-        viewModel.coffeeLiveData.observe(viewLifecycleOwner){
+        viewModel.allCoffeeMenuLiveData.observe(viewLifecycleOwner){
             viewAllAdapter.setItem(it)
-        }
-        viewModel.frapuccinoLiveData.observe(viewLifecycleOwner){
-            viewAllAdapter.setItem(it)
-        }
-        viewModel.blendedLiveData.observe(viewLifecycleOwner){
-            viewAllAdapter.setItem(it)
-            viewAllAdapter.refresh()
             dataBinding.lavCoffee.visibility = View.GONE
         }
         viewAllAdapter.setOnItemClickListener { view, item ->
             fragmentManager?.transactAnimate(view,item)
         }
     }
-
-
 }

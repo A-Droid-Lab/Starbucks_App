@@ -76,7 +76,7 @@ class HomeCoffeeFragment : BaseFragment<CoffeeViewModel, FragmentHomeCoffeeBindi
     }
 
     private fun initOnClick(){
-        coffeeAdapter.setOnItemClickListener {item, view->
+        coffeeAdapter.setOnItemClickListener { item, _ ->
             fragmentManager?.transactSwipe(item)
         }
 

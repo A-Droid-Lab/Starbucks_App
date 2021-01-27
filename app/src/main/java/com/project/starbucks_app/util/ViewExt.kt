@@ -31,11 +31,9 @@ fun FragmentManager.transactSwipe(item:MenuItem){
 
 inline fun <reified T:Fragment> FragmentManager.transactSlide() {
     beginTransaction()
-        .setCustomAnimations(R.anim.slide_in_up, R.anim.slide_out_up, R.anim.slide_in_down, R.anim.slide_out_down)
-        .replace(R.id.container, T::class.java.newInstance())
-        .addToBackStack(null)
-        .commit()
+            .setCustomAnimations(R.anim.slide_in_up, R.anim.slide_out_up, R.anim.slide_in_down, R.anim.slide_out_down)
+            .replace(R.id.container, T::class.java.newInstance())
+            .addToBackStack(null)
+            .commit()
 }
 
-//inline fun <reified T : Fragment> transactSlide2() = T::class.java.newInstance()
-//R.anim.slide_in_down, R.anim.slide_out_down

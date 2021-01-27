@@ -13,13 +13,17 @@ class StarbucksRepository @Inject constructor(private val apiService: ApiService
 
     fun getCoffeeMenu() : Single<List<MenuItem>> {
         return apiService.getAllMenus()
-            .subscribeOn(Schedulers.io()) //Observable이 발행되는 스레드를 지정한다.
-            .observeOn(AndroidSchedulers.mainThread()) //처리된 결과를 전달하는 스레드 지정한다.
-            .toObservable()
-            .flatMapIterable {
-                it.filter { t -> t.id in 249..295 }
-            }
-            .toList()
+                .subscribeOn(Schedulers.io()) //Observable이 발행되는 스레드를 지정한다. 여기선 네트워크 통신으로 io 스레드에서 하겠다는 것.
+                .observeOn(AndroidSchedulers.mainThread()) //처리된 결과를 전달하는 스레드 지정한다. = 워크 스레드에서 데이터를 가져오지만 가져온 데이터 구독은 메인 스레드에서 하겠다.
+                .toObservable() // Single을 Observable로 변환하며 변환된 Observable은 Single이 배출 할 항목을 배출한 후 종료된다
+                .flatMapIterable {
+                    it.filter { t -> t.id in 249..295 }
+                }
+                .toList() // Observable의 toList는 Single을 반환한다.
+        // concatMap, switchMap, flatMap
+        // concatMap = 순서를 보장하지만 동기라서 느리다.
+        // flatMap = 순서를 보장하지 못하지만 비동기라서 빠르다.
+        // switchMap = 이전에 구독하던 것을 해지하고 늘 최신만을 구독한다.
     }
 
     fun getFrapuccino() : Single<List<MenuItem>> {
@@ -44,13 +48,13 @@ class StarbucksRepository @Inject constructor(private val apiService: ApiService
             .toList()
     }
 
-    fun getBakery() : Single<List<MenuItem>>{
+    fun getAllCoffeeMenu() : Single<List<MenuItem>>{
         return apiService.getAllMenus()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .toObservable()
                 .flatMapIterable {
-                    it.filter { t -> t.id in 405..414 }
+                    it.filter { t -> t.id in 249..320 }
                 }
                 .toList()
     }

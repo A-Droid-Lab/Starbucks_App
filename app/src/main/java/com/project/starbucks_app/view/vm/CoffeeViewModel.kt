@@ -22,6 +22,10 @@ class CoffeeViewModel @Inject constructor(private val repo : StarbucksRepository
     val blendedLiveData : LiveData<List<MenuItem>>
         get() = _blendedLiveData
 
+    private val _allCoffeeMenuLiveData = MutableLiveData<List<MenuItem>>()
+    val allCoffeeMenuLiveData : LiveData<List<MenuItem>>
+        get() = _allCoffeeMenuLiveData
+
 
     fun getCoffeeMenu(){
         addDisposable(
@@ -56,6 +60,17 @@ class CoffeeViewModel @Inject constructor(private val repo : StarbucksRepository
                 },{
                     Log.d("Error Response ", it.localizedMessage)
                 })
+        )
+    }
+
+    fun getAllCoffeeMenu(){
+        addDisposable(
+                repo.getAllCoffeeMenu()
+                        .subscribe({
+                            _allCoffeeMenuLiveData.postValue(it)
+                        },{
+                            Log.d("Error Response ", it.localizedMessage)
+                        })
         )
     }
 

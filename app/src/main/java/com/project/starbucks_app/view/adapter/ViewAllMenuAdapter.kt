@@ -3,6 +3,7 @@ package com.project.starbucks_app.view.adapter
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.ImageView
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.project.starbucks_app.data.local.entity.MenuItem
 import com.project.starbucks_app.databinding.ItemMenuBinding
@@ -30,11 +31,9 @@ class ViewAllMenuAdapter() : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     override fun getItemCount(): Int = dataList.size
 
     fun setItem(data : List<MenuItem>){
-        dataList.addAll(data)
-    }
-
-    fun refresh(){
-        notifyDataSetChanged()
+        val diffResult = DiffUtil.calculateDiff(DiffCallback(dataList, data))
+        dataList.addAll(data as ArrayList<MenuItem>)
+        diffResult.dispatchUpdatesTo(this)
     }
 
     inner class MainViewHolder(private val binding : ItemMenuBinding) : RecyclerView.ViewHolder(binding.root){

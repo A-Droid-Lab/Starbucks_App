@@ -2,10 +2,10 @@ package com.project.starbucks_app.di.module
 
 import android.app.Application
 import androidx.room.Room
+import com.project.starbucks_app.BuildConfig
 import com.project.starbucks_app.data.local.StarbucksDatabase
 import com.project.starbucks_app.data.local.dao.StarbucksDao
 import com.project.starbucks_app.data.remote.ApiService
-import com.project.starbucks_app.util.Constants
 import dagger.Module
 import dagger.Provides
 import okhttp3.OkHttpClient
@@ -42,7 +42,7 @@ class AppModule {
     @Singleton
     fun provideApiService(okHttpClient: OkHttpClient): ApiService {
         val retrofit = Retrofit.Builder()
-            .baseUrl(Constants.BASE_URL)
+            .baseUrl(BuildConfig.BASE_URL)
             .addConverterFactory(GsonConverterFactory.create()) //Gson으로 데이터 컨버팅 하기 위해
             .addCallAdapterFactory(RxJava2CallAdapterFactory.create()) //RxJava를 사용하여 데이터를 비동기 통신하기 위해
             .client(okHttpClient)
