@@ -5,6 +5,9 @@ plugins {
     id 'kotlin-parcelize'
 }
 
+def Properties properties = new Properties()
+properties.load(project.rootProject.file('local.properties').newDataInputStream())
+
 android {
     compileSdkVersion 30
     buildToolsVersion "30.0.2"
@@ -23,11 +26,8 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            buildConfigField("String", "BASE_URL", properties.getProperty("baseUrl"))
         }
-    }
-
-    buildTypes.each {
-        it.buildConfigField 'String', 'BASE_URL', baseUrl
     }
 
     compileOptions {
